@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ai7-sU-lyP">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Record-->
@@ -63,10 +64,10 @@
             </objects>
             <point key="canvasLocation" x="512.79999999999995" y="-335.82999999999998"/>
         </scene>
-        <!--View Controller-->
+        <!--Play Sounds View Controller-->
         <scene sceneID="M8i-Vb-ztw">
             <objects>
-                <viewController id="U2t-NI-JkB" sceneMemberID="viewController">
+                <viewController id="U2t-NI-JkB" customClass="PlaySoundsViewController" customModule="Pitch_Perfect" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y7L-cs-U29"/>
                         <viewControllerLayoutGuide type="bottom" id="GIc-Lh-as1"/>
@@ -74,9 +75,49 @@
                     <view key="view" contentMode="scaleToFill" id="JWG-FE-xBV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Oa-yJ-607">
+                                <rect key="frame" x="36" y="84" width="100" height="100"/>
+                                <state key="normal" image="snail">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="slowAudio:" destination="U2t-NI-JkB" eventType="touchUpInside" id="1tc-iW-Uev"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SpW-ju-iVh">
+                                <rect key="frame" x="184" y="84" width="100" height="100"/>
+                                <state key="normal" image="rabbit">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="fastAudio:" destination="U2t-NI-JkB" eventType="touchUpInside" id="8IL-dV-Y9U"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r2D-ba-8gb">
+                                <rect key="frame" x="135" y="510" width="50" height="50"/>
+                                <state key="normal" image="stop">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="stopAudio:" destination="U2t-NI-JkB" eventType="touchUpInside" id="YVh-zL-5ht"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="GIc-Lh-as1" firstAttribute="top" secondItem="r2D-ba-8gb" secondAttribute="bottom" constant="8" id="Ccf-6S-P2S"/>
+                            <constraint firstItem="SpW-ju-iVh" firstAttribute="top" secondItem="y7L-cs-U29" secondAttribute="bottom" constant="20" id="Ien-nC-IdQ"/>
+                            <constraint firstItem="2Oa-yJ-607" firstAttribute="leading" secondItem="JWG-FE-xBV" secondAttribute="leadingMargin" constant="20" id="bFT-MW-TlC"/>
+                            <constraint firstAttribute="centerX" secondItem="r2D-ba-8gb" secondAttribute="centerX" id="doe-zk-670"/>
+                            <constraint firstItem="SpW-ju-iVh" firstAttribute="trailing" secondItem="JWG-FE-xBV" secondAttribute="trailingMargin" constant="-20" id="gac-hc-xux"/>
+                            <constraint firstItem="2Oa-yJ-607" firstAttribute="top" secondItem="y7L-cs-U29" secondAttribute="bottom" constant="20" id="tka-Qg-RkO"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ZUF-NQ-rS2"/>
+                    <connections>
+                        <outlet property="stopButton" destination="r2D-ba-8gb" id="TON-y7-Kd1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GQO-lK-NPP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -103,6 +144,8 @@
     </scenes>
     <resources>
         <image name="microphone" width="100" height="100"/>
+        <image name="rabbit" width="100" height="100"/>
+        <image name="snail" width="100" height="100"/>
         <image name="stop" width="50" height="50"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
