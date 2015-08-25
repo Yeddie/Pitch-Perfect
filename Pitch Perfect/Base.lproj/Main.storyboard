@@ -82,7 +82,9 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="recordButton" destination="QeI-bw-vfX" id="S83-Tw-mzd"/>
                         <outlet property="recordingInProgress" destination="0ME-2K-hXo" id="iou-mK-dMz"/>
+                        <outlet property="stopButton" destination="B6Z-Z6-pp1" id="359-oy-vKw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
