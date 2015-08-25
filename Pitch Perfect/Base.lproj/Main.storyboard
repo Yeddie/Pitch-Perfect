@@ -16,31 +16,81 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QeI-bw-vfX">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QeI-bw-vfX">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" title="Button">
+                                <state key="normal" image="microphone">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <variation key="heightClass=regular" fixedFrame="YES">
-                                    <rect key="frame" x="277" y="385" width="46" height="30"/>
-                                </variation>
+                                <connections>
+                                    <action selector="recordAudio:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="GrZ-L7-Zzm"/>
+                                </connections>
+                            </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="recording" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ME-2K-hXo">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B6Z-Z6-pp1">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" image="stop">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="stopRecording:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="vxA-AA-1bd"/>
+                                </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="B6Z-Z6-pp1" secondAttribute="bottom" constant="20" id="Cdw-Yq-5eF"/>
+                            <constraint firstItem="0ME-2K-hXo" firstAttribute="top" secondItem="QeI-bw-vfX" secondAttribute="bottom" constant="8" id="Cg3-Zv-TW2"/>
+                            <constraint firstAttribute="centerX" secondItem="QeI-bw-vfX" secondAttribute="centerX" id="IDP-YG-lHr"/>
+                            <constraint firstAttribute="centerX" secondItem="B6Z-Z6-pp1" secondAttribute="centerX" id="JHN-Dc-k6A"/>
+                            <constraint firstAttribute="centerX" secondItem="0ME-2K-hXo" secondAttribute="centerX" constant="-0.5" id="rMG-tG-1va"/>
+                            <constraint firstAttribute="centerY" secondItem="QeI-bw-vfX" secondAttribute="centerY" id="vlj-l6-U5Y"/>
+                        </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="QeI-bw-vfX"/>
+                                <exclude reference="0ME-2K-hXo"/>
+                                <exclude reference="B6Z-Z6-pp1"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="IDP-YG-lHr"/>
+                                <exclude reference="vlj-l6-U5Y"/>
+                                <exclude reference="Cg3-Zv-TW2"/>
+                                <exclude reference="rMG-tG-1va"/>
+                                <exclude reference="JHN-Dc-k6A"/>
+                                <exclude reference="Cdw-Yq-5eF"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
                             <mask key="subviews">
                                 <include reference="QeI-bw-vfX"/>
+                                <include reference="0ME-2K-hXo"/>
+                                <include reference="B6Z-Z6-pp1"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="IDP-YG-lHr"/>
+                                <include reference="vlj-l6-U5Y"/>
+                                <include reference="Cg3-Zv-TW2"/>
+                                <include reference="rMG-tG-1va"/>
+                                <include reference="JHN-Dc-k6A"/>
+                                <include reference="Cdw-Yq-5eF"/>
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="recordingInProgress" destination="0ME-2K-hXo" id="iou-mK-dMz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="microphone" width="100" height="100"/>
+        <image name="stop" width="50" height="50"/>
+    </resources>
 </document>
