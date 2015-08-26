@@ -13,24 +13,24 @@ class PlaySoundsViewController: UIViewController {
     let slowRate: Float = 0.5
     let fastRate: Float = 1.5
     var audioPlayer = AVAudioPlayer()
+    var receivedAudio:RecordedAudio!
     @IBOutlet weak var stopButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         stopButton.hidden = true
-        if var soundPath = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("movie_quote", ofType: "mp3")!) {
-            var error:NSError?
-            audioPlayer = AVAudioPlayer(contentsOfURL:soundPath, error:&error)
-            audioPlayer.enableRate = true
-            audioPlayer.prepareToPlay()
-        } else {
-            println("Could not find audio file path")
-        }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+//        if var soundPath = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("movie_quote", ofType: "mp3")!) {
+//            var error:NSError?
+//            audioPlayer = AVAudioPlayer(contentsOfURL:soundPath, error:&error)
+//            
+//        } else {
+//            println("Could not find audio file path")
+//        }
+        
+        var error:NSError?
+        audioPlayer = AVAudioPlayer(contentsOfURL:receivedAudio.filePathUrl, error:&error)
+        audioPlayer.enableRate = true
+        audioPlayer.prepareToPlay()
     }
     
     @IBAction func slowAudio(sender: UIButton) {
@@ -49,6 +49,9 @@ class PlaySoundsViewController: UIViewController {
         stopButton.hidden = false
     }
     
+    @IBAction func chipmunkAudio(sender: UIButton) {
+
+    }
     @IBAction func stopAudio(sender: UIButton) {
         audioPlayer.stop()
         audioPlayer.currentTime = NSTimeInterval(0)

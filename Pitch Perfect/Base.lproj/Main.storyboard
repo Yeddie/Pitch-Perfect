@@ -8,7 +8,7 @@
         <!--Record-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModule="Pitch_Perfect" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="RecordsSoundsViewController" customModule="Pitch_Perfect" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -39,7 +39,6 @@
                                 </state>
                                 <connections>
                                     <action selector="stopRecording:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="vxA-AA-1bd"/>
-                                    <segue destination="U2t-NI-JkB" kind="push" id="fm5-hn-xR9"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -58,11 +57,12 @@
                         <outlet property="recordButton" destination="QeI-bw-vfX" id="S83-Tw-mzd"/>
                         <outlet property="recordingInProgress" destination="0ME-2K-hXo" id="iou-mK-dMz"/>
                         <outlet property="stopButton" destination="B6Z-Z6-pp1" id="359-oy-vKw"/>
+                        <segue destination="U2t-NI-JkB" kind="push" identifier="stopRecording" id="h7J-8N-Nhc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="512.79999999999995" y="-335.82999999999998"/>
+            <point key="canvasLocation" x="541" y="-333"/>
         </scene>
         <!--Play Sounds View Controller-->
         <scene sceneID="M8i-Vb-ztw">
@@ -103,6 +103,15 @@
                                     <action selector="stopAudio:" destination="U2t-NI-JkB" eventType="touchUpInside" id="YVh-zL-5ht"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aQE-7O-krL">
+                                <rect key="frame" x="36" y="192" width="100" height="100"/>
+                                <state key="normal" image="chipmunk">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="chipmunkAudio:" destination="U2t-NI-JkB" eventType="touchUpInside" id="GOE-pD-7zc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -111,6 +120,8 @@
                             <constraint firstItem="2Oa-yJ-607" firstAttribute="leading" secondItem="JWG-FE-xBV" secondAttribute="leadingMargin" constant="20" id="bFT-MW-TlC"/>
                             <constraint firstAttribute="centerX" secondItem="r2D-ba-8gb" secondAttribute="centerX" id="doe-zk-670"/>
                             <constraint firstItem="SpW-ju-iVh" firstAttribute="trailing" secondItem="JWG-FE-xBV" secondAttribute="trailingMargin" constant="-20" id="gac-hc-xux"/>
+                            <constraint firstItem="aQE-7O-krL" firstAttribute="leading" secondItem="JWG-FE-xBV" secondAttribute="leadingMargin" constant="20" id="i30-3T-nwn"/>
+                            <constraint firstItem="aQE-7O-krL" firstAttribute="top" secondItem="2Oa-yJ-607" secondAttribute="bottom" constant="8" id="ryA-3m-Idp"/>
                             <constraint firstItem="2Oa-yJ-607" firstAttribute="top" secondItem="y7L-cs-U29" secondAttribute="bottom" constant="20" id="tka-Qg-RkO"/>
                         </constraints>
                     </view>
@@ -143,6 +154,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="chipmunk" width="100" height="100"/>
         <image name="microphone" width="100" height="100"/>
         <image name="rabbit" width="100" height="100"/>
         <image name="snail" width="100" height="100"/>
