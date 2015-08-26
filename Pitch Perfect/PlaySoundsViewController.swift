@@ -14,6 +14,9 @@ class PlaySoundsViewController: UIViewController {
     let fastRate: Float = 1.5
     var audioPlayer = AVAudioPlayer()
     var receivedAudio:RecordedAudio!
+    var audioEngine: AVAudioEngine!
+    var audioFile:AVAudioFile!
+    
     @IBOutlet weak var stopButton: UIButton!
     
     override func viewDidLoad() {
@@ -31,6 +34,9 @@ class PlaySoundsViewController: UIViewController {
         audioPlayer = AVAudioPlayer(contentsOfURL:receivedAudio.filePathUrl, error:&error)
         audioPlayer.enableRate = true
         audioPlayer.prepareToPlay()
+        
+        audioEngine = AVAudioEngine()
+        audioFile = AVAudioFile(forReading: receivedAudio.filePathUrl, error: nil)
     }
     
     @IBAction func slowAudio(sender: UIButton) {
@@ -50,8 +56,34 @@ class PlaySoundsViewController: UIViewController {
     }
     
     @IBAction func chipmunkAudio(sender: UIButton) {
-
+        playAudioWithVariablePitch(1000)
     }
+    
+    @IBAction func darthVaderAudio(sender: UIButton) {
+        playAudioWithVariablePitch(-1000)
+    }
+    
+    func playAudioWithVariablePitch(pitch: Float){
+        audioPlayer.stop()
+        audioEngine.stop()
+        audioEngine.reset()
+        
+        var audioPlayerNode = AVAudioPlayerNode()
+        audioEngine.attachNode(audioPlayerNode)
+        
+        var changePitchEffect = AVAudioUnitTimePitch()
+        changePitchEffect.pitch = pitch
+        audioEngine.attachNode(changePitchEffect)
+        
+        audioEngine.connect(audioPlayerNode, to: changePitchEffect, format: nil)
+        audioEngine.connect(changePitchEffect, to: audioEngine.outputNode, format: nil)
+        
+        audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
+        audioEngine.startAndReturnError(nil)
+        
+        audioPlayerNode.play()
+    }
+    
     @IBAction func stopAudio(sender: UIButton) {
         audioPlayer.stop()
         audioPlayer.currentTime = NSTimeInterval(0)

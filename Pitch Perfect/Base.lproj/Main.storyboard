@@ -112,10 +112,20 @@
                                     <action selector="chipmunkAudio:" destination="U2t-NI-JkB" eventType="touchUpInside" id="GOE-pD-7zc"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u6K-cj-wRf">
+                                <rect key="frame" x="184" y="192" width="100" height="100"/>
+                                <state key="normal" image="darthVader">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="darthVaderAudio:" destination="U2t-NI-JkB" eventType="touchUpInside" id="bVa-IV-dRw"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="GIc-Lh-as1" firstAttribute="top" secondItem="r2D-ba-8gb" secondAttribute="bottom" constant="8" id="Ccf-6S-P2S"/>
+                            <constraint firstItem="u6K-cj-wRf" firstAttribute="top" secondItem="SpW-ju-iVh" secondAttribute="bottom" constant="8" id="DNq-7i-UeC"/>
                             <constraint firstItem="SpW-ju-iVh" firstAttribute="top" secondItem="y7L-cs-U29" secondAttribute="bottom" constant="20" id="Ien-nC-IdQ"/>
                             <constraint firstItem="2Oa-yJ-607" firstAttribute="leading" secondItem="JWG-FE-xBV" secondAttribute="leadingMargin" constant="20" id="bFT-MW-TlC"/>
                             <constraint firstAttribute="centerX" secondItem="r2D-ba-8gb" secondAttribute="centerX" id="doe-zk-670"/>
@@ -123,6 +133,7 @@
                             <constraint firstItem="aQE-7O-krL" firstAttribute="leading" secondItem="JWG-FE-xBV" secondAttribute="leadingMargin" constant="20" id="i30-3T-nwn"/>
                             <constraint firstItem="aQE-7O-krL" firstAttribute="top" secondItem="2Oa-yJ-607" secondAttribute="bottom" constant="8" id="ryA-3m-Idp"/>
                             <constraint firstItem="2Oa-yJ-607" firstAttribute="top" secondItem="y7L-cs-U29" secondAttribute="bottom" constant="20" id="tka-Qg-RkO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="u6K-cj-wRf" secondAttribute="trailing" constant="20" id="uoG-jr-7dq"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ZUF-NQ-rS2"/>
@@ -155,6 +166,7 @@
     </scenes>
     <resources>
         <image name="chipmunk" width="100" height="100"/>
+        <image name="darthVader" width="100" height="100"/>
         <image name="microphone" width="100" height="100"/>
         <image name="rabbit" width="100" height="100"/>
         <image name="snail" width="100" height="100"/>
