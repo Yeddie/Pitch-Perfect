@@ -9,97 +9,151 @@
 import UIKit
 import AVFoundation
 
-class PlaySoundsViewController: UIViewController {
-    let slowRate: Float = 0.5
-    let fastRate: Float = 1.5
+
+/*
+* View Controller used to play recorded audio with several effects
+*/
+class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
     var audioPlayer = AVAudioPlayer()
     var receivedAudio:RecordedAudio!
     var audioEngine: AVAudioEngine!
     var audioFile:AVAudioFile!
-    
     @IBOutlet weak var stopButton: UIButton!
     
+    
+    /*
+    * Audio button restoration ids
+    */
+    enum AudioButtons: String {
+        case Snail = "snailButton"
+        case Rabbit = "rabbitButton"
+        case Chipmunk = "chipmunkButton"
+        case Darth = "darthVaderButton"
+    }
+    
+    
+    /*
+    * View has been loaded
+    */
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Hide stop button
         stopButton.hidden = true
-//        if var soundPath = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("movie_quote", ofType: "mp3")!) {
-//            var error:NSError?
-//            audioPlayer = AVAudioPlayer(contentsOfURL:soundPath, error:&error)
-//            
-//        } else {
-//            println("Could not find audio file path")
-//        }
         
+        //Create audio player from recorded file
         var error:NSError?
         audioPlayer = AVAudioPlayer(contentsOfURL:receivedAudio.filePathUrl, error:&error)
         audioPlayer.enableRate = true
         audioPlayer.prepareToPlay()
         
+        //Create audio engine
         audioEngine = AVAudioEngine()
         audioFile = AVAudioFile(forReading: receivedAudio.filePathUrl, error: nil)
+        
+        //Set delegate to hide stop button once audio has been played
+        audioPlayer.delegate = self
     }
     
-    @IBAction func slowAudio(sender: UIButton) {
-        changeAudioRate(slowRate)
-    }
-
-    @IBAction func fastAudio(sender: UIButton) {
-        changeAudioRate(fastRate)
+    
+    // MARK: Sound Button Actions
+    
+    
+    /*
+    * Play audio based on button pressed
+    */
+    @IBAction func playAudio(sender: UIButton) {
+        if let restId = sender.restorationIdentifier {
+            switch restId {
+            case AudioButtons.Snail.rawValue:
+                changeAudioRate(0.5)
+            case AudioButtons.Rabbit.rawValue:
+                changeAudioRate(1.5)
+            case AudioButtons.Chipmunk.rawValue:
+                playAudioWithVariablePitch(1000)
+            case AudioButtons.Darth.rawValue:
+                playAudioWithVariablePitch(-1000)
+            default:
+                println("Could not find audio button!")
+                break;
+            }
+        }
     }
     
+    
+    /*
+    * Stop audio
+    */
+    @IBAction func stopAudio(sender: UIButton) {
+        resetAudioPlayer()
+        stopButton.hidden = true
+    }
+    
+    
+    // MARK: Audio Controls
+    
+    
+    /*
+    * Play audio with pitch changed
+    */
     func changeAudioRate(rate: Float) {
-        audioPlayer.stop()
-        audioPlayer.currentTime = NSTimeInterval(0)
+        resetAudioPlayer()
         audioPlayer.rate = rate
         audioPlayer.play()
-        stopButton.hidden = false
     }
     
-    @IBAction func chipmunkAudio(sender: UIButton) {
-        playAudioWithVariablePitch(1000)
-    }
     
-    @IBAction func darthVaderAudio(sender: UIButton) {
-        playAudioWithVariablePitch(-1000)
-    }
-    
+    /*
+    * Play audio with pitch changed
+    */
     func playAudioWithVariablePitch(pitch: Float){
-        audioPlayer.stop()
-        audioEngine.stop()
-        audioEngine.reset()
+        //Reset player
+        resetAudioPlayer()
         
+        //Create player node
         var audioPlayerNode = AVAudioPlayerNode()
         audioEngine.attachNode(audioPlayerNode)
         
+        //Create pitch effect
         var changePitchEffect = AVAudioUnitTimePitch()
         changePitchEffect.pitch = pitch
         audioEngine.attachNode(changePitchEffect)
         
+        //Connect node and pitch to audio engine
         audioEngine.connect(audioPlayerNode, to: changePitchEffect, format: nil)
         audioEngine.connect(changePitchEffect, to: audioEngine.outputNode, format: nil)
         
-        audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
+        //Schedule playing of audio from file
+        audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: ({self.stopButton.hidden = true}))
         audioEngine.startAndReturnError(nil)
         
         audioPlayerNode.play()
     }
     
-    @IBAction func stopAudio(sender: UIButton) {
+    
+    /*
+    * Reset Audio Player and Audio Engine
+    */
+    func resetAudioPlayer() {
+        // Stop and reset time of player
         audioPlayer.stop()
         audioPlayer.currentTime = NSTimeInterval(0)
-        stopButton.hidden = true
+        
+        // Stop and reset engine
+        audioEngine.stop()
+        audioEngine.reset()
+        
+        //Show stop button
+        stopButton.hidden = false
     }
     
+    
+    // MARK: Audio Player Delegate
     
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
+    * Hide stop button once audio is done playing
     */
-
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
+        stopButton.hidden = true
+    }
 }
