@@ -8,7 +8,19 @@
 
 import Foundation
 
+
+/*
+* Recorded audio from microphone
+*/
 class RecordedAudio: NSObject{
-    var filePathUrl: NSURL!
-    var title: String!
+    let filePathUrl: NSURL!
+    let title: String!
+    
+    /*
+    * Init RecordedAudio with file path and title
+    */
+    init(filePathUrl: NSURL, title: String) {
+        self.filePathUrl = filePathUrl
+        self.title = title
+    }
 }
