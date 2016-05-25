@@ -40,18 +40,21 @@ class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
         //Hide stop button
         stopButton.hidden = true
         
+        do {
         //Create audio player from recorded file
-        var error:NSError?
-        audioPlayer = AVAudioPlayer(contentsOfURL:receivedAudio.filePathUrl, error:&error)
+        try audioPlayer = AVAudioPlayer(contentsOfURL:receivedAudio.filePathUrl)
         audioPlayer.enableRate = true
         audioPlayer.prepareToPlay()
         
         //Create audio engine
         audioEngine = AVAudioEngine()
-        audioFile = AVAudioFile(forReading: receivedAudio.filePathUrl, error: nil)
+        try audioFile = AVAudioFile(forReading: receivedAudio.filePathUrl)
         
         //Set delegate to hide stop button once audio has been played
         audioPlayer.delegate = self
+        } catch {
+            print("Error in audio file")
+        }
     }
     
     
@@ -73,7 +76,7 @@ class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
             case AudioButtons.Darth.rawValue:
                 playAudioWithVariablePitch(-1000)
             default:
-                println("Could not find audio button!")
+                print("Could not find audio button!")
                 break;
             }
         }
@@ -110,11 +113,11 @@ class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
         resetAudioPlayer()
         
         //Create player node
-        var audioPlayerNode = AVAudioPlayerNode()
+        let audioPlayerNode = AVAudioPlayerNode()
         audioEngine.attachNode(audioPlayerNode)
         
         //Create pitch effect
-        var changePitchEffect = AVAudioUnitTimePitch()
+        let changePitchEffect = AVAudioUnitTimePitch()
         changePitchEffect.pitch = pitch
         audioEngine.attachNode(changePitchEffect)
         
@@ -124,9 +127,13 @@ class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
         
         //Schedule playing of audio from file
         audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: ({self.stopButton.hidden = true}))
-        audioEngine.startAndReturnError(nil)
         
+        do {
+            try audioEngine.start()
         audioPlayerNode.play()
+        } catch {
+            print("Error in playback")
+        }
     }
     
     
@@ -153,7 +160,7 @@ class PlaySoundsViewController: UIViewController, AVAudioPlayerDelegate {
     /*
     * Hide stop button once audio is done playing
     */
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
         stopButton.hidden = true
     }
 }
